@@ -333,7 +333,10 @@
                 "Veo en ti la luz, y la claridad ha llegado ya..." <br><br>
                 Te espero para compartir juntos un día inolvidable lleno de alegría y momentos especiales.
             </p>
-
+            <div style="margin-top: 15px; border-top: 1px solid rgba(255,215,0,0.3); padding-top: 12px;">
+                <p style="font-size: 0.75rem; letter-spacing: 2px; color: #ffd700; text-transform: uppercase; margin-bottom: 4px;">Invitación especial para:</p>
+                <p id="invitado-nombre" style="font-size: 1.1rem; color: #ffffff; font-family: 'Cinzel', serif; font-weight: bold;">Familia / Nombre</p>
+            </div>
             <div class="card-box">
                 <h3>Faltan Pocos Días</h3>
                 <div class="countdown-container">
@@ -531,6 +534,11 @@
         function confirmRSVP() {
             const text = "¡Hola! Quisiera confirmar mi asistencia a los 15 de Agustina. 🌸";
             window.open(`https://api.whatsapp.com/send?phone=${RSVP_PHONE_NUMBER}&text=${encodeURIComponent(text)}`, '_blank');
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const nombreInvitado = urlParams.get('p');
+        if (nombreInvitado) {
+            document.getElementById('invitado-nombre').textContent = decodeURIComponent(nombreInvitado.replace(/\+/g, ' '));
         }
     </script>
 </body>
