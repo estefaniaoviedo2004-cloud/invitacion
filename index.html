@@ -335,7 +335,7 @@
             </p>
             <div style="margin-top: 15px; border-top: 1px solid rgba(255,215,0,0.3); padding-top: 12px;">
                 <p style="font-size: 0.75rem; letter-spacing: 2px; color: #ffd700; text-transform: uppercase; margin-bottom: 4px;">Invitación especial para:</p>
-                <p id="invitado-nombre" style="font-size: 1.1rem; color: #ffffff; font-family: 'Cinzel', serif; font-weight: bold;">Familia / Nombre</p>
+                <p id="invitado-nombre" style="font-size: 1.1rem; color: #ffffff; font-family: 'Cinzel', serif; font-weight: bold;">Familia / Silva</p>
             </div>
             <div class="card-box">
                 <h3>Faltan Pocos Días</h3>
@@ -537,7 +537,7 @@
         }
         const urlParams = new URLSearchParams(window.location.search);
         const nombreInvitado = urlParams.get('p');
-        if (nombreInvitado) {
+        if (Familia Silva) {
             document.getElementById('invitado-nombre').textContent = decodeURIComponent(nombreInvitado.replace(/\+/g, ' '));
         }
     </script>
