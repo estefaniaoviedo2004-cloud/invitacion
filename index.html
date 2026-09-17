@@ -536,9 +536,11 @@
             const text = "¡Hola! Quisiera confirmar mi asistencia a los 15 de Agustina. 🌸";
             window.open(`https://api.whatsapp.com/send?phone=${RSVP_PHONE_NUMBER}&text=${encodeURIComponent(text)}`, '_blank');
         }
+       // LECTURA DEL PARÁMETRO DE LA URL PARA MOSTRAR EL NOMBRE DEL INVITADO
         const urlParams = new URLSearchParams(window.location.search);
         const nombreInvitado = urlParams.get('p');
-        if (invitado-nombre) {
+        
+        if (nombreInvitado) {
             document.getElementById('invitado-nombre').textContent = decodeURIComponent(nombreInvitado.replace(/\+/g, ' '));
         }
     </script>
