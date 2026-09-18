@@ -11,8 +11,6 @@
     
     <!-- Librería para generar el código QR dinámicamente -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- API de YouTube IFrame -->
-    <script src="https://www.youtube.com/iframe_api"></script>
 
     <style>
         * {
@@ -42,7 +40,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(5, 3, 8, 0.95);
+            background: rgba(5, 3, 8, 0.96);
             z-index: 99999;
             display: flex;
             flex-direction: column;
@@ -81,6 +79,7 @@
             border: none;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
             animation: pulse 1.8s infinite;
+            cursor: pointer;
         }
 
         @keyframes pulse {
@@ -364,20 +363,11 @@
             display: block;
             margin: 0 auto;
         }
-
-        /* Ocultar el iframe de YouTube */
-        #youtube-player {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de Inicio para activar Audio -->
+    <!-- Pantalla de Inicio para activar Audio en Celulares -->
     <div id="start-overlay" onclick="startExperience()">
         <h2>Agustina</h2>
         <p>Mis 15 Años</p>
@@ -386,8 +376,10 @@
 
     <div class="music-btn" onclick="toggleAudio()" title="Música de fondo">🎵</div>
 
-    <!-- Reproductor Oculto de YouTube con la canción "Veo en ti la luz" -->
-    <div id="youtube-player"></div>
+    <!-- Audio MP3 de Rapunzel "Veo en ti la luz" hosted on CDN -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://ia801503.us.archive.org/15/items/veo-en-ti-la-luz-rapunzel/Veo%20En%20Ti%20La%20Luz%20-%20Rapunzel.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="invitation-card">
         <div class="content-layer">
@@ -477,23 +469,10 @@
         const RSVP_PHONE_NUMBER = "5493764803907";
         const MESSAGES_PHONE_NUMBER = "5493765036144";
 
-        let player;
         let isPlaying = false;
+        const audio = document.getElementById('bgMusic');
 
-        // INICIALIZACIÓN DE YOUTUBE PLAYER ("Veo en ti la luz" - Rapunzel)
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                videoId: 'fKEm60D3U2E', // Canción 'Veo en ti la luz' de Rapunzel
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'fKEm60D3U2E'
-                }
-            });
-        }
-
-        // INICIAR EXPERIENCIA Y MÚSICA AL TOCAR EL BOTÓN
+        // INICIAR EXPERIENCIA Y MÚSICA AL TOCAR EL OVERLAY
         function startExperience() {
             const overlay = document.getElementById('start-overlay');
             if (overlay) {
@@ -502,22 +481,26 @@
                 setTimeout(() => overlay.remove(), 500);
             }
 
-            if (player && typeof player.playVideo === 'function') {
-                player.playVideo();
-                isPlaying = true;
+            if (audio) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                }).catch(err => {
+                    console.log("Error al iniciar audio:", err);
+                });
             }
         }
 
         // CONTROL DE BOTÓN DE MÚSICA
         function toggleAudio() {
-            if (!player || typeof player.playVideo !== 'function') return;
+            if (!audio) return;
 
             if (isPlaying) {
-                player.pauseVideo();
+                audio.pause();
                 isPlaying = false;
             } else {
-                player.playVideo();
-                isPlaying = true;
+                audio.play().then(() => {
+                    isPlaying = true;
+                }).catch(err => console.log("Error al reproducir:", err));
             }
         }
 
