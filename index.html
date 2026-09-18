@@ -289,7 +289,6 @@
             color: #ffd700;
         }
 
-        /* ESTILOS DEL QR EN PANTALLA */
         .qr-card-container {
             display: inline-block;
             background: #ffffff;
@@ -319,7 +318,6 @@
     </audio>
 
     <div class="invitation-card">
-
         <div class="content-layer">
 
             <p class="header-subtitle">MIS 15 AÑOS</p>
@@ -334,12 +332,10 @@
                 Te espero para compartir juntos un día inolvidable lleno de alegría y momentos especiales.
             </p>
             
-            <div style="margin-top: 15px; border-top: 1px solid rgba(255,215,0,0.3); padding-top: 12px;">
+            <div style="margin-top: 15px; border-top: 1px solid rgba(255,215,0,0.3); padding-top: 12px; margin-bottom: 20px;">
                 <p style="font-size: 0.75rem; letter-spacing: 2px; color: #ffd700; text-transform: uppercase; margin-bottom: 4px;">Invitación especial para:</p>
                 <p id="invitado-nombre" style="font-size: 1.15rem; color: #ffffff; font-family: 'Cinzel', serif; font-weight: bold;">Familia / Nombre</p>
-    
-            <div style="width: 50px; height: 1px; background: rgba(255,215,0,0.3); margin: 8px auto;"></div>
-    
+                <div style="width: 50px; height: 1px; background: rgba(255,215,0,0.3); margin: 8px auto;"></div>
                 <p id="invitado-cupo" style="font-size: 0.75rem; letter-spacing: 2px; color: #ffd700; text-transform: uppercase; font-weight: bold;"></p>
             </div>
 
@@ -358,7 +354,7 @@
                 <p style="font-size: 0.9rem; font-weight: 600; color: #ffffff;">DOMINGO 29 DE NOVIEMBRE</p>
                 <p style="font-size: 0.8rem; color: #ffd700; margin-top: 3px;">Horario: 11:00 hs a 18:00 hs</p>
                 <div class="divider" style="margin: 12px auto; background: linear-gradient(90deg, transparent, #ffd700, transparent);"></div>
-                <button class="btn-action btn-outline" onclick="openLocationMap()"> Ver Ubicación</button>
+                <button class="btn-action btn-outline" onclick="openLocationMap()">Ver Ubicación</button>
             </div>
 
             <div class="card-box">
@@ -368,23 +364,20 @@
                 </p>
                 <p style="font-size: 0.78rem; color: #ffd700; margin-bottom: 10px;">Te sugerimos traer:</p>
                 <div class="items-list">
-                    <span class="tag-item">🪑 Tu sillon</span>
+                    <span class="tag-item">🪑 Tu sillón</span>
                     <span class="tag-item">🧉 Mate / Tereré</span>
                     <span class="tag-item">✨ Muchas ganas de disfrutar</span>
                 </div>
             </div>
 
-            <!-- SECCIÓN CON EL CÓDIGO QR DIRECTO -->
             <div class="card-box" style="border: 1px solid #ffd700; background: rgba(35, 15, 55, 0.85);">
                 <h3>📸 Galería en Vivo</h3>
                 <p style="font-size: 0.82rem; color: #ffffff; margin-bottom: 12px; line-height: 1.4;">
                     ¡Escanea o toca el código QR para compartir tus fotos en nuestro álbum!
                 </p>
-                
                 <div class="qr-card-container" onclick="openPhotoGallery()">
                     <div id="qrcode-direct"></div>
                 </div>
-                
             </div>
 
             <div class="card-box">
@@ -399,58 +392,55 @@
                 <p style="font-size: 0.8rem; color: #ffffff; margin-bottom: 12px;">Agradecemos confirmar tu presencia para este día tan especial.</p>
                 <button class="btn-action" style="background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: #ffffff;" onclick="confirmRSVP()">✅ Confirmar Asistencia</button>
             </div>
-            </div>
-            </div>
-            <script>
-            // LECTURA DE PARÁMETROS DESDE LA URL
-                urlParams = new URLSearchParams(window.location.search);
-                const nombreParam = urlParams.get('p');
-                const cantidadParam = urlParams.get('c');
 
-            // Mostrar el nombre
-                if (nombreParam) {
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURACIÓN DE ENLACES Y NÚMEROS DE TELEFONO
+        const ALBUM_URL = "https://photos.app.goo.gl/MQQgbzZxboYACygS9";
+        const MAPS_URL = "https://maps.app.goo.gl/ir9rUSUv9ZQCoKmm7?g_st=aw";
+        const RSVP_PHONE_NUMBER = "5493764803907";
+        const MESSAGES_PHONE_NUMBER = "5493765036144";
+
+        // LECTURA DE PARÁMETROS URL (?p=Nombre&c=Cantidad)
+        window.addEventListener('DOMContentLoaded', () => {
+            const paramsURL = new URLSearchParams(window.location.search);
+            const nombreParam = paramsURL.get('p');
+            const cantidadParam = paramsURL.get('c');
+
+            if (nombreParam) {
                 const elNombre = document.getElementById('invitado-nombre');
                 if (elNombre) {
                     elNombre.textContent = decodeURIComponent(nombreParam.replace(/\+/g, ' '));
-                    }
                 }
+            }
 
-            // Mostrar la cantidad
-                const elCupo = document.getElementById('invitado-cupo');
-                if (cantidadParam && elCupo) {
-                    const cuposNum = parseInt(cantidadParam, 10);
-        
+            const elCupo = document.getElementById('invitado-cupo');
+            if (cantidadParam && elCupo) {
+                const cuposNum = parseInt(cantidadParam, 10);
                 if (cuposNum === 1) {
                     elCupo.textContent = "VÁLIDO PARA 1 PERSONA";
                 } else if (cuposNum > 1) {
                     elCupo.textContent = `VÁLIDO PARA ${cuposNum} PERSONAS`;
                 }
-             }
-        </script>
-    </div>
+            }
 
-    <script>
-        // CONFIGURACIÓN DE ENLACES
-        const ALBUM_URL = "https://photos.app.goo.gl/MQQgbzZxboYACygS9";
-        const MAPS_URL = "https://maps.app.goo.gl/ir9rUSUv9ZQCoKmm7?g_st=aw";
-
-        // CONFIGURACIÓN DE TELÉFONOS DE WHATSAPP
-        const RSVP_PHONE_NUMBER = "5493764803907"; // Número para Confirmar Asistencia
-        const MESSAGES_PHONE_NUMBER = "5493765036144"; // Reemplazar con el número para recibir mensajes/felicitaciones (ejemplo: "5493764XXXXXX")
-
-        // GENERACIÓN AUTOMÁTICA DEL QR AL CARGAR LA PÁGINA
-        window.addEventListener('DOMContentLoaded', () => {
+            // Generación del QR
             const qrContainer = document.getElementById("qrcode-direct");
-            new QRCode(qrContainer, {
-                text: ALBUM_URL,
-                width: 160,
-                height: 160,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
+            if (qrContainer) {
+                new QRCode(qrContainer, {
+                    text: ALBUM_URL,
+                    width: 160,
+                    height: 160,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            }
         });
 
+        // CONTROL DE AUDIO
         const audio = document.getElementById('bgMusic');
         let isPlaying = false;
 
@@ -464,7 +454,7 @@
             }
         }
 
-        // FECHA DEL EVENTO
+        // CONTADOR
         const eventDate = new Date(2026, 10, 29, 11, 0, 0).getTime();
 
         function updateCountdown() {
@@ -491,10 +481,10 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // EFECTOS VISUALES (Chispas y Linternas)
         function createSparkle() {
             const sparkle = document.createElement('div');
             sparkle.className = 'flower-sparkle';
-            
             sparkle.style.left = Math.random() * 95 + 'vw';
             sparkle.style.top = Math.random() * 80 + 10 + 'vh';
             
@@ -506,10 +496,7 @@
             sparkle.style.animationDuration = duration + 's';
 
             document.body.appendChild(sparkle);
-
-            setTimeout(() => { 
-                sparkle.remove(); 
-            }, duration * 1000);
+            setTimeout(() => { sparkle.remove(); }, duration * 1000);
         }
         setInterval(createSparkle, 350);
 
@@ -528,27 +515,22 @@
             lantern.style.transform = `scale(${scale})`;
 
             document.body.appendChild(lantern);
-
-            setTimeout(() => {
-                lantern.remove();
-            }, 7000);
+            setTimeout(() => { lantern.remove(); }, 7000);
         }
 
         window.addEventListener('pointerdown', (e) => {
             spawnLantern(e.clientX, e.clientY);
         });
 
-        // REDIRECCIÓN A GOOGLE MAPS
+        // ACCIONES
         function openLocationMap() {
             window.open(MAPS_URL, '_blank');
         }
 
-        // REDIRECCIÓN A LA GALERÍA
         function openPhotoGallery() {
             window.open(ALBUM_URL, '_blank');
         }
 
-        // ENVIAR MENSAJE PARA LA QUINCEAÑERA
         function sendWish() {
             const name = document.getElementById('senderName').value.trim();
             const message = document.getElementById('wishMessage').value.trim();
@@ -562,17 +544,9 @@
             window.open(`https://api.whatsapp.com/send?phone=${MESSAGES_PHONE_NUMBER}&text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // CONFIRMAR ASISTENCIA
         function confirmRSVP() {
             const text = "¡Hola! Quisiera confirmar mi asistencia a los 15 de Agustina. 🌸";
             window.open(`https://api.whatsapp.com/send?phone=${RSVP_PHONE_NUMBER}&text=${encodeURIComponent(text)}`, '_blank');
-        }
-       // LECTURA DEL PARÁMETRO DE LA URL PARA MOSTRAR EL NOMBRE DEL INVITADO
-        const urlParams = new URLSearchParams(window.location.search);
-        const nombreInvitado = urlParams.get('p');
-        
-        if (nombreInvitado) {
-            document.getElementById('invitado-nombre').textContent = decodeURIComponent(nombreInvitado.replace(/\+/g, ' '));
         }
     </script>
 </body>
