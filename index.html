@@ -376,9 +376,10 @@
 
     <div class="music-btn" onclick="toggleAudio()" title="Música de fondo">🎵</div>
 
-    <!-- Tu archivo de audio original -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="pgn.mp4" type="audio/mpeg">
+    <!-- Reproductor configurado con el archivo pgn.mp4 de tu repositorio -->
+    <audio id="bgMusic" loop preload="auto" playsinline webkit-playsinline>
+        <source src="pgn.mp4" type="audio/mp4">
+        <source src="pgn.mp4" type="video/mp4">
     </audio>
 
     <div class="invitation-card">
