@@ -402,31 +402,31 @@
             </div>
             </div>
             <script>
-        // LECTURA DE PARÁMETROS DESDE LA URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const nombreInvitado = urlParams.get('p');
-        const cantidadCupos = urlParams.get('c');
+            // LECTURA DE PARÁMETROS DESDE LA URL
+                urlParams = new URLSearchParams(window.location.search);
+                const nombreParam = urlParams.get('p');
+                const cantidadParam = urlParams.get('c');
 
-       // Mostrar el nombre
-        if (nombreInvitado) {
-            document.getElementById('invitado-nombre').textContent = decodeURIComponent(nombreInvitado.replace(/\+/g, ' '));
-        }
+            // Mostrar el nombre
+                if (nombreParam) {
+                const elNombre = document.getElementById('invitado-nombre');
+                if (elNombre) {
+                    elNombre.textContent = decodeURIComponent(nombreParam.replace(/\+/g, ' '));
+                    }
+                }
 
-         // Mostrar la cantidad
-        const elementoCupo = document.getElementById('invitado-cupo');
-        if (cantidadCupos && elementoCupo) {
-            const cupos = parseInt(cantidadCupos, 10);
-    
-            if (cupos === 1) {
-                elementoCupo.textContent = "VÁLIDO PARA 1 PERSONA";
-            } else if (cupos > 1) {
-                elementoCupo.textContent = `VÁLIDO PARA ${cupos} PERSONAS`;
-            }
-        }
+            // Mostrar la cantidad
+                const elCupo = document.getElementById('invitado-cupo');
+                if (cantidadParam && elCupo) {
+                    const cuposNum = parseInt(cantidadParam, 10);
+        
+                if (cuposNum === 1) {
+                    elCupo.textContent = "VÁLIDO PARA 1 PERSONA";
+                } else if (cuposNum > 1) {
+                    elCupo.textContent = `VÁLIDO PARA ${cuposNum} PERSONAS`;
+                }
+             }
         </script>
-           
-       
-        </div>
     </div>
 
     <script>
