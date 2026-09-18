@@ -33,6 +33,60 @@
             position: relative;
         }
 
+        /* Overlay de Bienvenida para Autoplay de Audio */
+        #start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 3, 8, 0.95);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #start-overlay h2 {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 3.5rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        #start-overlay p {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 25px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+            color: #0d0614;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: none;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.98); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(0.98); }
+        }
+
         .invitation-card {
             width: 100%;
             max-width: 430px;
@@ -312,6 +366,13 @@
 </head>
 <body>
 
+    <!-- Pantalla de Inicio para activar Audio en Celulares -->
+    <div id="start-overlay" onclick="startExperience()">
+        <h2>Agustina</h2>
+        <p>Mis 15 Años</p>
+        <button class="btn-start">✨ Abrir Invitación</button>
+    </div>
+
     <div class="music-btn" onclick="toggleAudio()" title="Música de fondo">🎵</div>
     <audio id="bgMusic" loop preload="auto">
         <source src="rapunzel.mp3" type="audio/mpeg">
@@ -399,11 +460,30 @@
     </div>
 
     <script>
-        // CONFIGURACIÓN DE ENLACES Y NÚMEROS DE TELEFONO
+        // CONFIGURACIÓN DE ENLACES Y TELEFONOS
         const ALBUM_URL = "https://photos.app.goo.gl/MQQgbzZxboYACygS9";
         const MAPS_URL = "https://maps.app.goo.gl/ir9rUSUv9ZQCoKmm7?g_st=aw";
         const RSVP_PHONE_NUMBER = "5493764803907";
         const MESSAGES_PHONE_NUMBER = "5493765036144";
+
+        let isPlaying = false;
+        const audio = document.getElementById('bgMusic');
+
+        // INICIAR EXPERIENCIA Y MÚSICA AL TOCAR EL OVERLAY
+        function startExperience() {
+            const overlay = document.getElementById('start-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => overlay.remove(), 500);
+            }
+
+            if (audio) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                }).catch(err => console.log("Audio no pudo iniciar automático:", err));
+            }
+        }
 
         // LECTURA DE PARÁMETROS URL (?p=Nombre&c=Cantidad)
         window.addEventListener('DOMContentLoaded', () => {
@@ -440,58 +520,19 @@
                     correctLevel : QRCode.CorrectLevel.H
                 });
             }
-
-            // Intento de reproducción automática al cargar la página
-            const bgAudio = document.getElementById('bgMusic');
-            if (bgAudio) {
-                const playPromise = bgAudio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        isPlaying = true;
-                    }).catch(() => {
-                        // Reproducción automática bloqueada por el navegador: se reproducirá con el primer toque
-                        const enableAutoplay = () => {
-                            bgAudio.play().then(() => {
-                                isPlaying = true;
-                            });
-                            document.removeEventListener('pointerdown', enableAutoplay);
-                            document.removeEventListener('scroll', enableAutoplay);
-                        };
-                        document.addEventListener('pointerdown', enableAutoplay);
-                        document.addEventListener('scroll', enableAutoplay);
-                    });
-                }
-            }
         });
 
-       // CONTROL DE AUDIO
-            const audio = document.getElementById('bgMusic');
-            let isPlaying = false;
-    
-            function toggleAudio() {
-                if (isPlaying) {
-                    audio.pause();
-                    isPlaying = false;
-                } else {
-                    audio.play().then(() => {
-                        isPlaying = true;
-                    }).catch(err => console.log("Error de reproducción:", err));
-                }
-            }
-
-        // Iniciar música al primer toque en la pantalla (evita el bloqueo de los celulares)
-        function iniciarAudioConPrimerToque() {
-            if (!isPlaying && audio) {
+        // CONTROL DE BOTÓN DE MÚSICA
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+            } else {
                 audio.play().then(() => {
                     isPlaying = true;
-                }).catch(() => {});
+                }).catch(err => console.log("Error al reproduir:", err));
             }
-            document.removeEventListener('click', iniciarAudioConPrimerToque);
-            document.removeEventListener('touchstart', iniciarAudioConPrimerToque);
         }
-
-        document.addEventListener('click', iniciarAudioConPrimerToque);
-        document.addEventListener('touchstart', iniciarAudioConPrimerToque);
 
         // CONTADOR
         const eventDate = new Date(2026, 10, 29, 11, 0, 0).getTime();
