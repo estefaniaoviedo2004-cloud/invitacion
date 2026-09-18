@@ -313,10 +313,10 @@
 <body>
 
     <div class="music-btn" onclick="toggleAudio()" title="Música de fondo">🎵</div>
-    <audio id="bgMusic" loop>
-        <source src="rapunzel.mp3" type="audio/mpeg">
+    <audio id="bgMusic" loop autoplay preload="auto">
+        <source src="rapunzel.mp3.mp3" type="audio/mpeg">
     </audio>
-    
+
     <div class="invitation-card">
         <div class="content-layer">
 
@@ -440,6 +440,28 @@
                     correctLevel : QRCode.CorrectLevel.H
                 });
             }
+
+            // Intento de reproducción automática al cargar la página
+            const bgAudio = document.getElementById('bgMusic');
+            if (bgAudio) {
+                const playPromise = bgAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isPlaying = true;
+                    }).catch(() => {
+                        // Reproducción automática bloqueada por el navegador: se reproducirá con el primer toque
+                        const enableAutoplay = () => {
+                            bgAudio.play().then(() => {
+                                isPlaying = true;
+                            });
+                            document.removeEventListener('pointerdown', enableAutoplay);
+                            document.removeEventListener('scroll', enableAutoplay);
+                        };
+                        document.addEventListener('pointerdown', enableAutoplay);
+                        document.addEventListener('scroll', enableAutoplay);
+                    });
+                }
+            }
         });
 
         // CONTROL DE AUDIO
@@ -451,8 +473,9 @@
                 audio.pause();
                 isPlaying = false;
             } else {
-                audio.play();
-                isPlaying = true;
+                audio.play().then(() => {
+                    isPlaying = true;
+                });
             }
         }
 
