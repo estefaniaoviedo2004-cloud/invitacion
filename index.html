@@ -401,30 +401,31 @@
             </div>
             </div>
             </div>
-
             <script>
-          // LECTURA DE PARÁMETROS DESDE LA URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const nombreInvitado = urlParams.get('p');
-            const cantidadCupos = urlParams.get('c');
+        // LECTURA DE PARÁMETROS DESDE LA URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const nombreInvitado = urlParams.get('p');
+        const cantidadCupos = urlParams.get('c');
 
-         // Mostrar el nombre
-            if (nombreInvitado) {
-                 document.getElementById('invitado-nombre').textContent = decodeURIComponent(nombreInvitado.replace(/\+/g, ' '));
+       // Mostrar el nombre
+        if (nombreInvitado) {
+            document.getElementById('invitado-nombre').textContent = decodeURIComponent(nombreInvitado.replace(/\+/g, ' '));
         }
 
-        // Mostrar la cantidad
-            const elementoCupo = document.getElementById('invitado-cupo');
-            if (cantidadCupos && elementoCupo) {
-                const cupos = parseInt(cantidadCupos, 10);
-        
-                if (cupos === 1) {
+         // Mostrar la cantidad
+        const elementoCupo = document.getElementById('invitado-cupo');
+        if (cantidadCupos && elementoCupo) {
+            const cupos = parseInt(cantidadCupos, 10);
+    
+            if (cupos === 1) {
                 elementoCupo.textContent = "VÁLIDO PARA 1 PERSONA";
-                } else if (cupos > 1) {
+            } else if (cupos > 1) {
                 elementoCupo.textContent = `VÁLIDO PARA ${cupos} PERSONAS`;
             }
-         }
+        }
         </script>
+           
+       
         </div>
     </div>
 
